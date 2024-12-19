@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="leaflet/leaflet.css" rel="stylesheet">
+    <style>
+        #mymap{ height: 100vh; }
+    </style>
+  </head>
+  <body>
+
+    <div id="mymap"></div>
+
+    <script src="leaflet/leaflet.js"></script>
+
+    <script>
+    
+    const map = L.map('mymap').setView([36.778259, -119.417931], 6);
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
+
+    tiles.addTo(map);
+
+    const data = [{title: "Interesting Places", lat: 0.452107, lon: 93.742118}]
+
+    $("#btn-1").on("click", function(){
+
+        map.flyTo([37.87,-122.27], 10);
+
+});
+
+const popup = L.popup();
+
+$("#btn-1").on("click", function(){    
+    
+    map.flyTo([37.87,-122.27], 10);
+
+    popup.setLatLng([37.87,-122.27]);
+    popup.setContent(`<h2>Berkeley!</h2>`);
+    popup.openOn(map);
+
+});
+
+    if(typeof data !== "undefined"){
+    data.forEach(d => {
+        let s = "<h3>" + d.title + "</h3>";
+        if(Object.hasOwn(d, 'image'))
+            s = s + '<img src="' + d.image + ' width="150" height="auto">';
+        L.marker([d.lat, d.lon]).bindPopup("<h3>" + d.title + "</h3>").addTo(map);
+    })
+    }
+
+
+
+
+    
+    </script>
+  </body>
+</html>
